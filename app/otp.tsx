@@ -27,17 +27,25 @@ const Page = () => {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>
+        {!loading && (
+          <View style= {[StyleSheet.absoluteFill, styles.loading]}>
+
+          </View>
+        )}
         <Text style={styles.description}>
           WhatsApp will need to verify your account. Carrier charges may apply.
         </Text>
         <View style={styles.list}>
           <View style={styles.listItem}>
-            <Text style={styles.listItemText}>Germany</Text>
+            <Text style={styles.listItemText}>United States</Text>
             <Ionicons name="chevron-forward" size={20} color={Colors.gray} />
           </View>
           <View style={styles.separator} />
           <MaskInput
             value={phoneNumber}
+            keyboardType="numeric"
+            autoFocus
+            placeholder="+1 (123) 456-7890"
             style={styles.input}
             onChangeText={(masked, unmasked) => {
               setPhoneNumber(masked);
@@ -161,6 +169,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 6,
     marginTop: 10,
+  },
+  loading: {
+    zIndex: 10,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 export default Page;
