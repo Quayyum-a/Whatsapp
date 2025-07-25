@@ -2,7 +2,7 @@ import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { View, Text, KeyboardAvoidingView, Platform, Linking, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, KeyboardAvoidingView, Platform, Linking, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaskInput from "react-native-mask-input";
 
@@ -18,21 +18,27 @@ const Page = () => {
   };
 
   const sendOTP = async () =>  {
-
+    setLoading('true');
+    setTimeout(() => {
+      setLoading('false');
+      router.push(`/verify/${phoneNumber}`);
+    }, 2000);
   }
-   const trySignIn = async () =>  {
+  const trySignIn = async () =>  {
 
   }
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>
-        {!loading && (
+        {loading && (
           <View style= {[StyleSheet.absoluteFill, styles.loading]}>
-
+            <ActivityIndicator size="large" color={Colors.primary} />
+            <Text style={{fontSize: 18, padding: 10}}> Sending code....</Text>
           </View>
         )}
         <Text style={styles.description}>
+
           WhatsApp will need to verify your account. Carrier charges may apply.
         </Text>
         <View style={styles.list}>
@@ -171,6 +177,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   loading: {
+    ...StyleSheet.absoluteFillObject,
     zIndex: 10,
     backgroundColor: "#fff",
     justifyContent: "center",
