@@ -3,12 +3,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View, Text, KeyboardAvoidingView, Platform, Linking, StyleSheet, TouchableOpacity } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Page = () => {
   const [loading, setLoading] = useState('false');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const router = useRouter();
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 140 : 0;
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 90 : 0;
+  const { bottom } = useSafeAreaInsets();
 
   const openLink = () => {
     Linking.openURL("http://quayyumsportfolio.netlify.app");
@@ -45,7 +47,8 @@ const Page = () => {
           <Text style={styles.link} onPress={openLink}>
             Meta Companies
           </Text>
-          <TouchableOpacity style={[styles.button, phoneNumber !== '' ? styles.enabled : null]}
+          <View style={{flex: 1}}/>
+          <TouchableOpacity style={[styles.button, phoneNumber !== '' ? styles.enabled : null, {marginBottom:bottom}]}
           disabled={phoneNumber === ''} onPress={sendOTP}>
             <Text style={[styles.buttonText, phoneNumber !== '' ? styles.enabled : null ]}>Next</Text>
           </TouchableOpacity>
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
     padding: 10,
     borderRadius: 10,
+    
   },
   enabled: {
     backgroundColor: Colors.primary,
