@@ -2,10 +2,10 @@ import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { View, Text, KeyboardAvoidingView, Platform, Linking, StyleSheet } from "react-native";
+import { View, Text, KeyboardAvoidingView, Platform, Linking, StyleSheet, TouchableOpacity } from "react-native";
 
 const Page = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState('false');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const router = useRouter();
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 140 : 0;
@@ -45,6 +45,10 @@ const Page = () => {
           <Text style={styles.link} onPress={openLink}>
             Meta Companies
           </Text>
+          <TouchableOpacity style={[styles.button, phoneNumber !== '' ? styles.enabled : null]}
+          disabled={phoneNumber === ''} onPress={sendOTP}>
+            <Text style={[styles.buttonText, phoneNumber !== '' ? styles.enabled : null ]}>Next</Text>
+          </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -92,6 +96,22 @@ const styles = StyleSheet.create({
   },
   link: {
     color: Colors.primary,
+  },
+  button: {
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: Colors.lightGray,
+    padding: 10,
+    borderRadius: 10,
+  },
+  enabled: {
+    backgroundColor: Colors.primary,
+    color: "#fff",
+  },
+  buttonText: {
+    color: Colors.gray,
+    fontSize: 22,
+    fontWeight: "500",
   },
 });
 export default Page;
