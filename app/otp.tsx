@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View, Text, KeyboardAvoidingView, Platform, Linking, StyleSheet, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import MaskInput from "react-native-mask-input";
 
 const Page = () => {
   const [loading, setLoading] = useState('false');
@@ -24,7 +25,7 @@ const Page = () => {
   }
 
   return (
-    <KeyboardAvoidingView style = {{flex : 1}}>
+    <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Text style={styles.description}>
           WhatsApp will need to verify your account. Carrier charges may apply.
@@ -32,26 +33,64 @@ const Page = () => {
         <View style={styles.list}>
           <View style={styles.listItem}>
             <Text style={styles.listItemText}>Germany</Text>
-            <Ionicons name= "chevron-forward" size={20} color={Colors.gray}/>
+            <Ionicons name="chevron-forward" size={20} color={Colors.gray} />
           </View>
-          <View style={styles.separator}/> 
+          <View style={styles.separator} />
+          <MaskInput
+            value={phoneNumber}
+            style={styles.input}
+            onChangeText={(masked, unmasked) => {
+              setPhoneNumber(masked);
+            }}
+            mask={[
+              `+`,
+              /\d/,
+              /\d/,
+              " ",
+              /\d/,
+              /\d/,
+              /\d/,
+              " ",
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+            ]}
+          />
         </View>
-        
         <Text style={styles.legal}>
-          You must be{' '}
+          You must be{" "}
           <Text style={styles.link} onPress={openLink}>
             at least 16 years old
-          </Text>{' '}
+          </Text>{" "}
         </Text>
-          to register. Learn how WhatsApp works with the{' '}
-          <Text style={styles.link} onPress={openLink}>
-            Meta Companies
+        to register. Learn how WhatsApp works with the{" "}
+        <Text style={styles.link} onPress={openLink}>
+          Meta Companies
+        </Text>
+        <View style={{ flex: 1 }} />
+        <TouchableOpacity
+          style={[
+            styles.button,
+            phoneNumber !== "" ? styles.enabled : null,
+            { marginBottom: bottom },
+          ]}
+          disabled={phoneNumber === ""}
+          onPress={sendOTP}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              phoneNumber !== "" ? styles.enabled : null,
+            ]}
+          >
+            Next
           </Text>
-          <View style={{flex: 1}}/>
-          <TouchableOpacity style={[styles.button, phoneNumber !== '' ? styles.enabled : null, {marginBottom:bottom}]}
-          disabled={phoneNumber === ''} onPress={sendOTP}>
-            <Text style={[styles.buttonText, phoneNumber !== '' ? styles.enabled : null ]}>Next</Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -106,7 +145,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
     padding: 10,
     borderRadius: 10,
-    
   },
   enabled: {
     backgroundColor: Colors.primary,
@@ -116,6 +154,13 @@ const styles = StyleSheet.create({
     color: Colors.gray,
     fontSize: 22,
     fontWeight: "500",
+  },
+  input: {
+    backgroundColor: "#fff",
+    width: "100%",
+    fontSize: 16,
+    padding: 6,
+    marginTop: 10,
   },
 });
 export default Page;
