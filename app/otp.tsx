@@ -29,9 +29,9 @@ const Page = () => {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }}>
+    <KeyboardAvoidingView behavior = "padding" keyboardVerticalOffset={keyboardVerticalOffset} style={{ flex: 1 }} avoidKeyboard={true}>
       <View style={styles.container}>
-        {loading && (
+        {!loading && (
           <View style= {[StyleSheet.absoluteFill, styles.loading]}>
             <ActivityIndicator size="large" color={Colors.primary} />
             <Text style={{fontSize: 18, padding: 10}}> Sending code....</Text>
