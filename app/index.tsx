@@ -1,10 +1,12 @@
 import Colors from "@/constants/Colors";
 import { Link } from "expo-router";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from "react-native";
 const welcome_image = require("../assets/images/welcome.png");
 
 const Page = () => {
-  const openLink = () => {}
+  const openLink = () => {
+    Linking.openURL('http://quayyumsportfolio.netlify.app')
+  }
   return (
     <View style={styles.container}>
       <Image source={welcome_image} style={styles.welcome} />
