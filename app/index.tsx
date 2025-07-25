@@ -1,5 +1,6 @@
 import Colors from "@/constants/Colors";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { Link } from "expo-router";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 const welcome_image = require("../assets/images/welcome.png");
 
 const Page = () => {
@@ -19,6 +20,11 @@ const Page = () => {
         </Text>
         .
       </Text>
+      <Link href={'/otp'} asChild>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}> Agree & Continue</Text>
+      </TouchableOpacity>
+      </Link>
     </View>
   );
 };
@@ -53,6 +59,11 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center'
   },
+  buttonText: {
+    fontSize: 22,
+    color: Colors.primary,
+    fontWeight: 'bold'
+  }
 });
 
 export default Page;
